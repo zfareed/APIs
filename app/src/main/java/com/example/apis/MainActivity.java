@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +16,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +24,13 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
   RequestQueue requestQueue;
     ImageView imageView;
+    TextView id;
+    TextView name;
+    TextView email;
+    TextView gender;
+    TextView mobile;
+    TextView home;
+    TextView office;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         fetchJsonResponse();
+
+        id = findViewById(R.id.idView);
+        name = findViewById(R.id.nameView);
+        email = findViewById(R.id.emailView);
+        gender = findViewById(R.id.genderView);
+        mobile = findViewById(R.id.mobileView);
+        home = findViewById(R.id.homeView);
+        office = findViewById(R.id.officeView);
 
 
 
@@ -47,12 +64,26 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("Zain", "OnResponse" + response.toString());
+
+                        Gson gson = new Gson();
+                        Users users= gson.fromJson(response.toString(),Users.class);
+
+                        id.setText(users.getUsers().get(0).getId());
+                        name.setText(users.getUsers().get(0).getName());
+                        email.setText(users.getUsers().get(0).getEmail());
+                        gender.setText(users.getUsers().get(0).getGender());
+                        mobile.setText(users.getUsers().get(0).getContact().getMobile());
+                        home.setText(users.getUsers().get(0).getContact().getHome());
+                        office.setText(users.getUsers().get(0).getContact().getOffice());
+
+
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Zain", "OnError" + error.getMessage());
+                Log.e("Fareed", "OnError" + error.getMessage());
             }
         });
 
