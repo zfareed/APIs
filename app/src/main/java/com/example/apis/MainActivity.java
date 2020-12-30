@@ -20,7 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-   /* RequestQueue requestQueue;*/
+  RequestQueue requestQueue;
     ImageView imageView;
 
     @Override
@@ -28,32 +28,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*requestQueue = Volley.newRequestQueue(this);
-        fetchJsonResponse();*/
-
         imageView = findViewById(R.id.imageView);
         Glide.with(this).load("https://i.pinimg.com/564x/f1/9e/7c/f19e7cb6acfa9e2778b48f4f15a23aac.jpg").into(imageView);
 
+        requestQueue = Volley.newRequestQueue(this);
+        fetchJsonResponse();
 
 
 
 
-   /* private void fetchJsonResponse() {
+
+
+      }
+
+    private void fetchJsonResponse() {
         // Pass second argument as "null" for GET requests
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "https://run.mocky.io/v3/27a10eb7-9a0d-4462-b53b-3dea1f1c3d5a", null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "https://run.mocky.io/v3/27a10eb7-9a0d-4462-b53b-3dea1f1c3d5a", null,       //mocky.io is a free tool for checking API requests
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("Zain","OnResponse"+response.toString());
+                        Log.i("Zain", "OnResponse" + response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Zain","OnResponse"+error.getMessage());
+                Log.e("Zain", "OnError" + error.getMessage());
             }
         });
 
-        requestQueue.add(req);*/
+        requestQueue.add(req);
 
     }
 }
